@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Introduction
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a template app created using Create-react-app with Storybook and SCSS enabled.
 
-## Available Scripts
+It also includes bootstrap as default styling framework.
 
-In the project directory, you can run:
 
-### `yarn start`
+# Scripts
+
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `npm run storybook`
 
-### `yarn test`
+Launch storybook server at [http://localhost:6006](http://localhost:6006).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `npm test`
 
-### `yarn build`
+Launches the test runner in the interactive watch mode.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `npm run build`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Build the project into `build` folder.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+For more information please refer to [official Create-react-app website.](https://create-react-app.dev/docs/available-scripts)
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Folder Structure
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Most part of the structure is the same with Create-react-app except for some extra folders:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- `src/assets/images/`: Contains images.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- `src/assets/style/`: Contains general stylesheets that can be in the whole site, including variables or global settings.
+    - `configs/`: for variables and other settings.
+    - `utils/`: for utilities such as mixins.
 
-## Learn More
+- `src/index.scss`: The unified entry of all scss stylesheets, which is included in `index.js` in place of the original `index.css`, whose content is moved to `src/assets/style/configs/_base.scss`.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- `src/components`: Contains js/jsx components and corresponding stylesheets (only used by that component).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `src/stories`: Examples from Storybook. Could be removed.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+# Notice about SCSS loader
 
-### Analyzing the Bundle Size
+Create-react-app defaultly use `node-sass` to build and import scss file. There is no problem directly importing scss files in js files like this:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+``` js
 
-### Making a Progressive Web App
+import './style.scss';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```
 
-### Advanced Configuration
+However, for Storybook, the [default preset for scss](https://storybook.js.org/docs/react/addons/install-addons#using-preset-addons) will install the latest **style-loader/css-loader/scss-loader** depending on webpack 5 which is not supported by current Storybook(although it has beta support now) and Create-react-app. Therefore, after installing the preset, those loaders have to be downgraded to webpack-4-capatible versions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+    "style-loader": "^2.0.0",
+    "css-loader": "^5.2.7",
+    "sass-loader": "10.1.1"
+```
 
-### Deployment
+Consequently, when importing scss files in `.storybook/preview.js` for Storybook preview, you have to use the old method:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+``` js
+import '!style-loader!css-loader!sass-loader!../src/index.scss';
+```
 
-### `yarn build` fails to minify
+## Reference
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://newbedev.com/syntax-error-sasserror-expected-code-example
