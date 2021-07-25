@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar-logo {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-github {
+  width: 36px;
+  height: 36px;
+  -webkit-mask: url(./assets/images/github.svg) no-repeat center;
+  mask: url(./assets/images/github.svg) no-repeat center;
+}
+
