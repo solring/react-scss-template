@@ -63,7 +63,7 @@ However, for Storybook, the [default preset for scss](https://storybook.js.org/d
     "sass-loader": "10.1.1"
 ```
 
-Also, removing `@storybook/preset-creat-react-app` in `.storybook/main.js` is also required according [to this issue.](https://github.com/storybookjs/presets/issues/195
+Also, removing `@storybook/preset-creat-react-app` from `.storybook/main.js` is also required according [to this issue.](https://github.com/storybookjs/presets/issues/195)
 
 
 ## Reference
