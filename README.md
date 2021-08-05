@@ -63,12 +63,10 @@ However, for Storybook, the [default preset for scss](https://storybook.js.org/d
     "sass-loader": "10.1.1"
 ```
 
-Consequently, when importing scss files in `.storybook/preview.js` for Storybook preview, you have to use the old method:
+Also, removing `@storybook/preset-creat-react-app` in `.storybook/main.js` is also required according [to this issue.](https://github.com/storybookjs/presets/issues/195
 
-``` js
-import '!style-loader!css-loader!sass-loader!../src/index.scss';
-```
 
 ## Reference
 
+https://github.com/storybookjs/presets/issues/195
 https://newbedev.com/syntax-error-sasserror-expected-code-example
